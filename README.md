@@ -32,7 +32,7 @@ Before running the application, ensure you have the following:
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/KavinRajagopal/GMI-POC.git
-   cd GMI-POC
+   cd Document-Based-Chatbot
    ```
 
 2. **Create a virtual environment** (optional but recommended):
@@ -154,4 +154,4 @@ Document-Based-Chatbot/
 
 - **Streamlit**: For the easy-to-use web framework.
 - **LangChain**: For the powerful document processing and retrieval tools.
-- **OpenAI**: For the GPT-4 model and embeddings.
+- **OpenAI**: For the GPT-4o model and embeddings.
