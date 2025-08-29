@@ -1,24 +1,53 @@
-langchain 
-langchain_experimental 
+# Core LangChain packages
+langchain
+langchain-openai
+langchain-community
+langchain_experimental
 langchain-huggingface
-openai 
-sqlalchemy 
-pandas 
-psycopg2-binary 
-langchain-openai 
-streamlit 
+
+# OpenAI and Azure OpenAI
+openai
+
+# Streamlit for web interface
+streamlit
+
+# Environment variables
 python-dotenv
+
+# Document processing
 unstructured
-faiss-cpu
-nltk
-dropbox
-langchain-community 
-sentence_transformers
-tqdm 
-pickle-mixin
-nltk
-pandas
 docx2txt
 openpyxl
+PyPDF2
+
+# Vector database
+faiss-cpu
+
+# Data processing
+pandas
+numpy
+
+# NLP utilities
+nltk
+sentence_transformers
+
+# Database (if needed for other features)
+sqlalchemy
+psycopg2-binary
+
+# Cloud storage (if needed)
+dropbox
+
+# Utilities
+tqdm
+pickle-mixin
+
+# Development tools
 pylint
 black
+
+# Additional dependencies that might be needed
+tiktoken
+pydantic
+requests
+urllib3

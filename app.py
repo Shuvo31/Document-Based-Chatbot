@@ -6,7 +6,7 @@ from langchain_community.document_loaders import (
 )
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_openai import AzureOpenAIEmbeddings, AzureChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 import streamlit as st
@@ -15,9 +15,19 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-# Load OpenAI API key from .env file
-if "OPENAI_API_KEY" not in os.environ:
-    st.error("OpenAI API key not found in .env file. Please add it.")
+# Load Azure OpenAI credentials from .env file
+required_env_vars = [
+    "AZURE_OPENAI_ENDPOINT",
+    "AZURE_OPENAI_API_KEY", 
+    "AZURE_OPENAI_DEPLOYMENT_NAME",
+    "AZURE_OPENAI_API_VERSION",
+    "AZURE_EMBEDDING_DEPLOYMENT_NAME",
+    "AZURE_EMBEDDING_API_VERSION"
+]
+
+missing_vars = [var for var in required_env_vars if var not in os.environ]
+if missing_vars:
+    st.error(f"Missing Azure OpenAI environment variables: {', '.join(missing_vars)}. Please add them to your .env file.")
     st.stop()
 
 SUPPORTED_EXTENSIONS = {
@@ -95,7 +105,15 @@ with st.sidebar:
                     chunk_overlap=200
                 )
                 texts = text_splitter.split_documents(documents)
-                embeddings = OpenAIEmbeddings()
+                
+                # Initialize Azure OpenAI Embeddings
+                embeddings = AzureOpenAIEmbeddings(
+                    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+                    azure_deployment=os.getenv("AZURE_EMBEDDING_DEPLOYMENT_NAME"),
+                    openai_api_version=os.getenv("AZURE_EMBEDDING_API_VERSION"),
+                    api_key=os.getenv("AZURE_OPENAI_API_KEY")
+                )
+                
                 vectorstore = FAISS.from_documents(texts, embeddings)
                 st.session_state.vectorstore = vectorstore
                 st.session_state.documents_processed = True
@@ -124,7 +142,15 @@ user_query = st.text_area("Ask a question about your documents:", key="user_inpu
 if st.button("Send"):
     if user_query and st.session_state.documents_processed:
         with st.spinner("Processing your query..."):
-            llm = ChatOpenAI(temperature=0.1, model="gpt-4o")
+            # Initialize Azure OpenAI Chat model
+            llm = AzureChatOpenAI(
+                azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+                azure_deployment=os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
+                openai_api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+                api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+                temperature=0.1
+            )
+            
             memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
             qa_chain = ConversationalRetrievalChain.from_llm(
                 llm=llm,
