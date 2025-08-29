@@ -29,6 +29,7 @@ venv/
 env/
 ENV/
 .venv/
+chatbot
 
 # IDE specific files
 .idea/
