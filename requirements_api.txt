@@ -1,0 +1,48 @@
+# FastAPI and related
+fastapi
+uvicorn[standard]
+python-multipart
+
+# Core LangChain packages
+langchain
+langchain-openai
+langchain-community
+
+# OpenAI and Azure OpenAI
+openai
+
+# Environment variables
+python-dotenv
+
+# Document processing
+unstructured
+docx2txt
+openpyxl
+PyPDF2
+
+# Vector database
+faiss-cpu
+
+# Data processing
+pandas
+numpy
+
+# NLP utilities
+nltk
+rouge-score
+
+# Database (if needed for other features)
+sqlalchemy
+
+# Utilities
+tqdm
+
+# Additional dependencies
+tiktoken
+pydantic
+requests
+urllib3
+pathlib
+
+# CORS support
+python-jose[cryptography]
