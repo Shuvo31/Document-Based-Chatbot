@@ -51,3 +51,9 @@ tiktoken
 pydantic
 requests
 urllib3
+
+# Evaluation libraries
+ragas
+rouge-score
+datasets
+evaluate
